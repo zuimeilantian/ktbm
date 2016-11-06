@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+            http://www.springframework.org/schema/beans/spring-beans.xsd  
+            http://www.springframework.org/schema/mvc  
+            http://www.springframework.org/schema/mvc/spring-mvc.xsd  
+            http://www.springframework.org/schema/context  
+            http://www.springframework.org/schema/context/spring-context.xsd"
+	default-lazy-init="true">
+
+	<!-- 通过mvc:resources设置静态资源，这样servlet就会处理这些静态资源，而不通过控制器 -->
+	<!-- 设置不过滤内容，比如:css,jquery,img 等资源文件 (其实就是过滤不需要拦截的文件) -->
+<!-- 	<mvc:resources location="/*.html" mapping="/**.html" /> -->
+<!-- 	<mvc:resources location="/bootstrap/*" mapping="/bootstrap/**" /> -->
+<!-- 	<mvc:resources location="/css/*" mapping="/css/**" /> -->
+<!-- 	<mvc:resources location="/js/*" mapping="/js/**" /> -->
+<!-- 	<mvc:resources location="/images/*" mapping="/images/**" /> -->
+<!-- 	<mvc:resources location="/html/*" mapping="/html/**" /> -->
+<!-- 	<mvc:resources mapping="/favicon.ico" location="/favicon.ico" /> -->
+
+	<!-- 自动扫描的包 -->
+	<context:component-scan base-package="com.danze.test">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+
+	<!-- 添加注解驱动 -->
+	<mvc:annotation-driven />
+	
+	<!-- 在 SpringMVC配置解决静态资源的问题： -->
+	<mvc:default-servlet-handler />
+
+	<!-- 对模型视图名称的解析，在请求时模型视图名称添加前后缀 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/html/" />
+		<property name="suffix" value=".html" />
+		<property name="order" value="0" />
+	</bean>
+</beans>  
