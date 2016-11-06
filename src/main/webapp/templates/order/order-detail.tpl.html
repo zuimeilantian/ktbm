@@ -1,0 +1,152 @@
+<ion-view>
+    <ion-content overflow-scroll='false'>
+        <nav class="nav-box">
+            <ul>
+                <li ng-click="selectType(0)" class="active"><span>未接单</span></li>
+                <li ng-click="selectType(1)"><span>进行中</span></li>
+                <li ng-click="selectType(2)"><span>已完成</span></li>
+            </ul>
+            <div class="dot-line"></div>
+        </nav>
+        <ion-slide-box does-continue="false" show-pager="false" auto-play="false" on-slide-changed="go_changed(index)"  active-slide="index" pager-click="go(index)">
+            <ion-slide>
+                <ion-list>
+                    <ion-item  style="margin-top: 8px;">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item" style="position: relative;">
+                                <p>订单编号: 201628124545</p>
+                                <p>空调机型: 商用空调机</p>
+                                <p>机组型号: AZYGHBH54</p>
+                                <p>维修人员: 王闯</p>
+                                <p>企业发布时间: 2016-08-20</p>
+                                <p ng-click="openPopover($event)">详情信息 <i class="icon  ion-android-arrow-dropdown-circle"></i></p>
+                                <div class="weui-flex__item">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_success detail-list-btn">未接单</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </ion-slide>
+            <ion-slide>
+                <ion-list>
+                    <ion-item  style="margin-top: 8px;">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item" style="position: relative;">
+                                <p>订单编号: 201628124545</p>
+                                <p>空调机型: 商用空调机</p>
+                                <p>机组型号: AZYGHBH54</p>
+                                <p>维修人员: 王闯</p>
+                                <p>企业发布时间: 2016-08-20</p>
+                                <p ng-click="openPopover($event)">详情信息 <i class="icon  ion-android-arrow-dropdown-circle"></i></p>
+                                <div class="weui-flex__item">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_success detail-list-btn">已分配</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-item>
+                    <ion-item style="margin-top: 8px;">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item" style="position: relative;">
+                                <p>订单编号: 201628124545</p>
+                                <p>空调机型: 商用空调机</p>
+                                <p>机组型号: AZYGHBH54</p>
+                                <p>维修人员: 王闯</p>
+                                <p>企业发布时间: 2016-08-20</p>
+                                <p ng-click="openPopover($event)">详情信息 <i class="icon  ion-android-arrow-dropdown-circle"></i></p>
+                                <div class="weui-flex__item">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_success detail-list-btn">已接单</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </ion-slide>
+            <ion-slide>
+                <ion-list>
+                    <ion-item  style="margin-top: 8px;">
+                        <div class="weui-flex">
+                            <div class="weui-flex__item" >
+                                <p>订单编号: 201628124545</p>
+                                <p>维修公司名: 江苏浩瀚技术有限公司</p>
+                                <p>派遣维修人员: 王闯</p>
+                            </div>
+                            <div class="weui-flex__item" style="text-align: right;position: relative;">
+                                <p ng-click="flag =! flag">详情信息 <i class="icon ion-chevron-{{flag?'up':'down'}}"></i></p>
+                                <div style="position: absolute;right: -7px;bottom: -12px;font-size: 11px;" ng-show="!flag">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary" style="font-size: 11px;">已完成</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_rated" style="font-size: 11px;" ng-click="rated()">评价</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weui-flex" ng-show="flag" id="wrapper-detail">
+                            <div class="weui-flex__item" >
+                                <p>订单编号: 201628124545</p>
+                                <p>维修公司名: 江苏浩瀚技术有限公司</p>
+                                <p>维修地址: 南京市中山南路122号</p>
+                                <p>空调机型: 商用空调机</p>
+                                <p>机组型号: EXZY66, 机内编号: DX332P, 外机编号: DC12K</p>
+                                <p>空调品牌: 格力空调4P</p>
+                                <p>派遣维修人员: 王闯</p>
+                                <p>故障现象: 调温不准确 阀件不工作</p>
+                                <p>质保情况: 保外</p>
+                                <p>付费情况: 已缴费</p>
+                                <div style="position: absolute;right: 5px;bottom: 5px;" ng-show="flag">
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_complete" style="font-size: 11px;">已完成</a>
+                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_rated" style="font-size: 11px;">评价</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </ion-slide>
+        </ion-slide-box>
+    </ion-content>
+</ion-view>
+<script id="my-popover.html" type="text/ng-template">
+    <ion-popover-view class="wrapper">
+            <p>订单编号: 201628124545</p>
+            <p>空调机型: 商用空调机</p>
+            <p>机组型号: AZYGHBH54</p>
+            <p>维修人员: 王闯</p>
+    </ion-popover-view>
+</script>
+<script id="rated_modal.tpl.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar align-title="center" class="bar-dark">
+            <button class="button button-clear" ng-click="closeModal()">取消</button>
+            <h1 class="title">评价</h1>
+            <button class="button button-clear">发表</button>
+        </ion-header-bar>
+        <ion-content class="has-header padding">
+                <section class="item">
+                    <p>维修公司名: 江苏浩瀚技术有限公司</p>
+                    <p>派遣维修人员: 王申 <i class="ion-ios-star" style="color: #ff363a;"></i>
+                        <i class="ion-ios-star" style="color: #ff363a;"></i>
+                        <i class="ion-ios-star" style="color: #ff363a;"></i>
+                        <i class="ion-ios-star" style="color: #ff363a;"></i>
+                        <i class="ion-ios-star" style="color: #4d4d4d;"></i>
+                    </p>
+                </section>
+                <div class="weui-flex item" style="margin-top: 8px;">
+                    <div class="weui-flex__item">
+                        <h3>派遣维修人员信息</h3>
+                        <p>名字: 王申</p>
+                        <p>工作经验: 7年</p>
+                        <p>所属公司: 江苏格力空调有限公司分部</p>
+                        <p>星评:
+                            <c-mark mark="rated"></c-mark>
+                        </p>
+                    </div>
+                    <div class="weui-flex__item">
+                        <img src="./img/adam.jpg" width="100%" alt="">
+                    </div>
+                </div>
+                <div class="list" style="margin-top: 8px;">
+                    <label class="item item-input">
+                        <textarea class="weui-textarea" placeholder="反馈意见" rows="4"></textarea>
+                    </label>
+                </div>
+        </ion-content>
+    </ion-modal-view>
+</script>

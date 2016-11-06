@@ -1,0 +1,143 @@
+.weui-cell{
+  height: 44px;
+}
+@keyframes fade-in {
+  0% {
+    transform: scale(0);
+    opacity: 0.0;
+  }
+  25% {
+    transform: scale(0);
+    opacity: 0.1;
+  }
+  50% {
+    transform: scale(0.1);
+    opacity: 0.3;
+  }
+  75% {
+    transform: scale(0.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1.0;
+  }
+}
+@-webkit-keyframes fade-in {
+  0% {
+    transform: scale(0);
+    opacity: 0.0;
+  }
+  25% {
+    transform: scale(0);
+    opacity: 0.1;
+  }
+  50% {
+    transform: scale(0.1);
+    opacity: 0.3;
+  }
+  75% {
+    transform: scale(0.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1.0;
+  }
+}
+.wrapper {
+  animation: fade-in;
+  animation-duration: .25s;
+  -webkit-animation:fade-in .25s;
+  width: 90%;height:auto;
+  border-radius: 1.2em 1.2em 1.2em 1.2em;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+  padding: 12px;
+}
+@keyframes fade-in {
+  0% {opacity: 0;}
+  40% {opacity: 0;}
+  100% {opacity: 1;}
+}
+@-webkit-keyframes fade-in {
+  0% {opacity: 0;}
+  40% {opacity: 0;}
+  100% {opacity: 1;}
+}
+#wrapper-detail {
+  animation: fade-in;
+  animation-duration: .25s;
+  -webkit-animation:fade-in .25s;
+}
+
+.nav-box {
+  width: 100%;
+  background: #ffffff;
+  height: 40px;
+  -webkit-box-shadow: 3px 0 2px;
+  -moz-box-shadow: 3px 0 2px;
+  box-shadow: 3px 0 2px;
+  position: relative;
+}
+.nav-box > ul{
+  width: 100%;
+  height: 40px;
+}
+.nav-box > ul > li {
+  width: 33.333%;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  float: left;
+}
+.nav-box > ul > li > span{
+  color: #999;
+}
+.nav-box > ul > li.active > span{
+  color: #333;
+}
+.nav-box > .dot-line {
+  display: block;
+  position: absolute;
+  top: 40px;
+  left: 5%;
+  width: 23%;
+  height: 2px;
+  background: #387ef5;
+  opacity: 1;
+  -webkit-transition: 0.2s ease-in-out;
+  -moz-transition: 0.2s ease-in-out;
+  -o-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+}
+.photo-camera{
+  color: #387ef5;
+  font-size: 28px;
+}
+.photo-progress{
+  padding: 16px;
+}
+.photo-progress-image{
+  display: block;
+  width:20%;
+  margin-right: 15px;
+  font-size: 0;
+}
+.photo-progress-image img{
+  width: 80%;
+}
+.wx-popup .popup{
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius:5px;
+  -moz-box-shadow:3px 3px 5px #333333;
+  -webkit-box-shadow:3px 3px 5px #333333;
+  box-shadow:3px 3px 5px #333333;
+}
+.detail-list-btn{
+  position: absolute;
+  right: -8px;
+  bottom: -8px;
+  font-size: 11px;
+}
+
