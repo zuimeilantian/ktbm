@@ -1,20 +1,8 @@
 /*global requirejs, document, cordova, window, navigator, console */
 
 require.config({
-   // baseUrl:'../',
     paths:{
-        // fastclick:'../lib/fastclick',
-        // cordova:'../cordova',
-        // cordovaDevice:'../plugins/cordova-plugin-device/www/device',
-        // cordovaSplashScreen:'../plugins/cordova-plugin-splashscreen/www/splashscreen',
-        // cordovaStatusbar:'../plugins/cordova-plugin-statusbar/www/statusbar',
-        // cordovaKeyboard:'../plugins/ionic-plugin-keyboard/www/android/keyboard',
-        // async:'../lib/async',
-        // domReady:'../lib/domReady',
         jquery: '../lib/jquery-2.1.1.min.js',
-        //BMap:'http://api.map.baidu.com/api?v=2.0&ak=A796271dae48229367c041db82735a4c&services=false',
-
-        
         angular:'../lib/ionic/js/angular/angular',
         angularAnimate:'../lib/ionic/js/angular/angular-animate',
         angularSanitize:'../lib/ionic/js/angular/angular-sanitize',
@@ -29,31 +17,15 @@ require.config({
         config:'config',
 
         services:'services/services',
-        // mainServices:'services/mainServices',
-        // indexServices:'services/indexServices',
-        // mapServices:'services/mapServices',
-        // moreServices:'services/moreServices',
-        // backButtonServices:'services/backButtonServices',
+        registerServices: 'services/registerServices',
 
-        //mainCtrl:'controllers/mainCtrl',
         indexCtrl:'controllers/indexCtrl',
-        // sortCtrl:'controllers/sortCtrl',
-        // memberCtrl:'controllers/memberCtrl',
-        // cartCtrl:'controllers/cartCtrl',
-        // moreCtrl:'controllers/moreCtrl',
-        // mapCtrl:'controllers/mapCtrl',
+        registerCtrl:'controllers/registerCtrl',
         controllers:'controllers/controllers',
-        //
         directives:'directives/directives',
-        // mainDirective:'directives/mainDirective',
     },
     waitSeconds: 40,
     shim:{
-        // cordova:{exports: 'cordova'},
-        // cordovaDevice:{deps: ['cordova'], exports: 'cordovaDevice'},
-        // cordovaSplashScreen:{deps: ['cordova'], exports: 'cordovaSplashScreen'},
-        // cordovaStatusbar:{deps: ['cordova'], exports: 'cordovaStatusbar'},
-        // cordovaKeyboard:{deps: ['cordova'], exports: 'cordovaKeyboard'},
         angular : {exports : 'angular'},
         app : {exports : 'app'},
         angularAnimate : {deps: ['angular']},
@@ -62,11 +34,7 @@ require.config({
         ngResource: {deps: ['angular']},
         ocLazyLoad: {exports: 'ocLazyLoad'},
         ionic :  {deps: ['angular'], exports : 'ionic'},
-        /*ionicAngular: {deps: ['angular', 'ionic','uiRouter', 
-                              'angularAnimate', 'angularSanitize',
-                              'ngResource','cordovaDevice','cordovaSplashScreen',
-                              'cordovaStatusbar','cordovaKeyboard'],exports: 'ionicAngular'}*/
-         ionicAngular: {deps: ['angular', 'ionic','uiRouter', 
+         ionicAngular: {deps: ['angular', 'ionic','uiRouter',
                               'angularAnimate', 'angularSanitize',
                               'ngResource'],exports: 'ionicAngular'}                      
     },

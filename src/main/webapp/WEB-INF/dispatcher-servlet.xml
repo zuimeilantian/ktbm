@@ -13,16 +13,16 @@
 
 	<!-- 通过mvc:resources设置静态资源，这样servlet就会处理这些静态资源，而不通过控制器 -->
 	<!-- 设置不过滤内容，比如:css,jquery,img 等资源文件 (其实就是过滤不需要拦截的文件) -->
-<!-- 	<mvc:resources location="/*.html" mapping="/**.html" /> -->
-<!-- 	<mvc:resources location="/bootstrap/*" mapping="/bootstrap/**" /> -->
-<!-- 	<mvc:resources location="/css/*" mapping="/css/**" /> -->
-<!-- 	<mvc:resources location="/js/*" mapping="/js/**" /> -->
-<!-- 	<mvc:resources location="/images/*" mapping="/images/**" /> -->
-<!-- 	<mvc:resources location="/html/*" mapping="/html/**" /> -->
-<!-- 	<mvc:resources mapping="/favicon.ico" location="/favicon.ico" /> -->
+	<!-- <mvc:resources location="/*.html" mapping="/**.html" /> -->
+	<!-- <mvc:resources location="/bootstrap/*" mapping="/bootstrap/**" /> -->
+	<!-- <mvc:resources location="/css/*" mapping="/css/**" /> -->
+	<!-- <mvc:resources location="/js/*" mapping="/js/**" /> -->
+	<!-- <mvc:resources location="/images/*" mapping="/images/**" /> -->
+	<!-- <mvc:resources location="/html/*" mapping="/html/**" /> -->
+	<!-- <mvc:resources mapping="/favicon.ico" location="/favicon.ico" /> -->
 
 	<!-- 自动扫描的包 -->
-	<context:component-scan base-package="com.danze.test">
+	<context:component-scan base-package="com.danze">
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 		<context:include-filter type="annotation"
@@ -31,7 +31,7 @@
 
 	<!-- 添加注解驱动 -->
 	<mvc:annotation-driven />
-	
+
 	<!-- 在 SpringMVC配置解决静态资源的问题： -->
 	<mvc:default-servlet-handler />
 
@@ -42,4 +42,30 @@
 		<property name="suffix" value=".html" />
 		<property name="order" value="0" />
 	</bean>
+
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+			<bean
+				class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+			<!-- <bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter"> 
+				<property name="supportedMediaTypes"> <list> <value>text/html;charset=UTF-8</value> 
+				<value>application/json;charset=UTF-8</value> </list> </property> </bean> -->
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8" />
+				<property name="supportedMediaTypes" value="text/html; application/json; charset=UTF-8" />
+			</bean>
+			<!-- 将Jackson2HttpMessageConverter的默认格式化输出设为true -->
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="prettyPrint" value="true" />
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json;charset=UTF-8</value>
+						<value>text/html;charset=utf-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
 </beans>  

@@ -58,12 +58,14 @@ define(['app','services'/*,'mainDirective'*/], function(app){
                             readableSize: bytesToSize(file.size)
                         });
                     };
-                    scope.uploadImgs = uploadImgs;
-                    setTimeout(function () {
+                    scope.$apply(function(){
+                        scope.uploadImgs = uploadImgs;
+                    })
+                   /* setTimeout(function () {
                         angular.forEach(uploadImgs, function (file) {
                             uploadFile(file)
                         })
-                    })
+                    })*/
                 });
                 var popup;
                 scope.checkImg = function(imgObj){

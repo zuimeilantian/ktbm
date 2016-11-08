@@ -1,35 +1,19 @@
-/*global define, require */
-
 define(['app'], function(app) {
     'use strict';
-    app/*.run(function ($ionicPlatform, $http, $rootScope) {
-            $rootScope.platform = ionic.Platform.platform();
-            $http.defaults.headers.common.token = 'admin';
-            $rootScope.$on('$ionicView.beforeEnter', function(event, viewData) {
-                console.log(111)
-                viewData.enableBack = true;
-            });
-            $rootScope.$on('$ionicView.afterEnter', function() {
-                console.log(222)
-            }, false);
-        })*/
-        .config(['$stateProvider', '$urlRouterProvider',
+    app.config(['$stateProvider', '$urlRouterProvider',
         function($stateProvider, $urlRouterProvider) {
             $stateProvider
-            // setup an abstract state for the tabs directive
-              /*  .state('wx', {
-                url: '/wx',
-                abstract: true,
-                templateUrl: 'templates/wx.tpl.html'
-            })*/
-            // Each tab has its own nav history stack:
-
-            .state('bonus', {
-                url: '/bonus',
-                templateUrl: 'templates/bonus/bonus.tpl.html',
-                data:{pageTitle:'bonus'},
-                controller: 'indexCtrl'
-            })
+                .state('register', {
+                    url: '/register',
+                    templateUrl: 'templates/register/register.tpl.html',
+                    controller: 'registerCtrl'
+                })
+                .state('bonus', {
+                    url: '/bonus',
+                    templateUrl: 'templates/bonus/bonus.tpl.html',
+                    data:{pageTitle:'bonus'},
+                    controller: 'indexCtrl'
+                })
             .state('record', {
                 url: '/record',
                 templateUrl: 'templates/bonus/bonus-record.tpl.html',
@@ -70,11 +54,7 @@ define(['app'], function(app) {
                     templateUrl: 'templates/order/detail.tpl.html',
                     controller: 'indexCtrl'
                 })
-                .state('login', { //登陆
-                    url: '/login',
-                    templateUrl: 'templates/order/login.tpl.html',
-                    controller: 'indexCtrl'
-                })
+
                 .state('rated', { //评价
                     url: '/rated',
                     templateUrl: 'templates/order/rated.tpl.html',

@@ -140,4 +140,15 @@
   bottom: -8px;
   font-size: 11px;
 }
+.item-status-label{
+  position: absolute;
+  background: #3987ff;
+  color: #ffffff;
+  right: 14px;
+  top: 0px;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
 

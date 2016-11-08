@@ -12,6 +12,7 @@
             <ion-slide>
                 <ion-list>
                     <ion-item  style="margin-top: 8px;">
+                        <span class="item-status-label">已分配</span>
                         <div class="weui-flex">
                             <div class="weui-flex__item" style="position: relative;">
                                 <p>订单编号: 201628124545</p>
@@ -19,10 +20,8 @@
                                 <p>机组型号: AZYGHBH54</p>
                                 <p>维修人员: 王闯</p>
                                 <p>企业发布时间: 2016-08-20</p>
-                                <p ng-click="openPopover($event)">详情信息 <i class="icon  ion-android-arrow-dropdown-circle"></i></p>
-                                <div class="weui-flex__item">
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_success detail-list-btn">未接单</a>
-                                </div>
+                                <p ng-click="openPopover($event)">详情信息 <i class="icon ion-chevron-down"></i>
+                                </p>
                             </div>
                         </div>
                     </ion-item>
@@ -31,6 +30,7 @@
             <ion-slide>
                 <ion-list>
                     <ion-item  style="margin-top: 8px;">
+                        <span class="item-status-label">已分配</span>
                         <div class="weui-flex">
                             <div class="weui-flex__item" style="position: relative;">
                                 <p>订单编号: 201628124545</p>
@@ -38,14 +38,12 @@
                                 <p>机组型号: AZYGHBH54</p>
                                 <p>维修人员: 王闯</p>
                                 <p>企业发布时间: 2016-08-20</p>
-                                <p ng-click="openPopover($event)">详情信息 <i class="icon  ion-android-arrow-dropdown-circle"></i></p>
-                                <div class="weui-flex__item">
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_success detail-list-btn">已分配</a>
-                                </div>
+                                <p ng-click="openPopover($event)">详情信息 <i class="icon ion-chevron-down"></i></p>
                             </div>
                         </div>
                     </ion-item>
                     <ion-item style="margin-top: 8px;">
+                        <span class="item-status-label">已分配</span>
                         <div class="weui-flex">
                             <div class="weui-flex__item" style="position: relative;">
                                 <p>订单编号: 201628124545</p>
@@ -53,10 +51,7 @@
                                 <p>机组型号: AZYGHBH54</p>
                                 <p>维修人员: 王闯</p>
                                 <p>企业发布时间: 2016-08-20</p>
-                                <p ng-click="openPopover($event)">详情信息 <i class="icon  ion-android-arrow-dropdown-circle"></i></p>
-                                <div class="weui-flex__item">
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_success detail-list-btn">已接单</a>
-                                </div>
+                                <p ng-click="openPopover($event)">详情信息 <i class="icon ion-chevron-down"></i></p>
                             </div>
                         </div>
                     </ion-item>
@@ -65,18 +60,15 @@
             <ion-slide>
                 <ion-list>
                     <ion-item  style="margin-top: 8px;">
+                        <span class="item-status-label">已完成</span>
                         <div class="weui-flex">
                             <div class="weui-flex__item" >
                                 <p>订单编号: 201628124545</p>
                                 <p>维修公司名: 江苏浩瀚技术有限公司</p>
                                 <p>派遣维修人员: 王闯</p>
-                            </div>
-                            <div class="weui-flex__item" style="text-align: right;position: relative;">
-                                <p ng-click="flag =! flag">详情信息 <i class="icon ion-chevron-{{flag?'up':'down'}}"></i></p>
-                                <div style="position: absolute;right: -7px;bottom: -12px;font-size: 11px;" ng-show="!flag">
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary" style="font-size: 11px;">已完成</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_rated" style="font-size: 11px;" ng-click="rated()">评价</a>
-                                </div>
+                                <p ng-click="flag =! flag" ng-show="!flag">详情信息 <i class="icon ion-chevron-{{flag?'up':'down'}}"></i>
+                                    <a href="javascript:;"  style="float: right;text-decoration: underline;" ng-click="rated()">评价 ></a>
+                                </p>
                             </div>
                         </div>
                         <div class="weui-flex" ng-show="flag" id="wrapper-detail">
@@ -90,11 +82,10 @@
                                 <p>派遣维修人员: 王闯</p>
                                 <p>故障现象: 调温不准确 阀件不工作</p>
                                 <p>质保情况: 保外</p>
-                                <p>付费情况: 已缴费</p>
-                                <div style="position: absolute;right: 5px;bottom: 5px;" ng-show="flag">
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_complete" style="font-size: 11px;">已完成</a>
-                                    <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_rated" style="font-size: 11px;">评价</a>
-                                </div>
+                                <p>付费情况: 已缴费 </p>
+                                <p ng-click="flag =! flag" ng-show="flag">详情信息 <i class="icon ion-chevron-{{flag?'up':'down'}}"></i>
+                                    <a href="javascript:;" style="float: right;text-decoration: underline;" ng-click="rated();$event.stopPropagation();">评价 ></a>
+                                </p>
                             </div>
                         </div>
                     </ion-item>
@@ -118,7 +109,7 @@
             <h1 class="title">评价</h1>
             <button class="button button-clear">发表</button>
         </ion-header-bar>
-        <ion-content class="has-header padding">
+        <ion-content class="has-header">
                 <section class="item">
                     <p>维修公司名: 江苏浩瀚技术有限公司</p>
                     <p>派遣维修人员: 王申 <i class="ion-ios-star" style="color: #ff363a;"></i>
