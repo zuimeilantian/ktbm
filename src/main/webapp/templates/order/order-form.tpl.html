@@ -1,58 +1,96 @@
 <ion-view view-title="下单">
     <ion-content overflow-scroll='false'>
-        <div class="weui-cells weui-cells_form" style="margin-top: 15px;">
+        <div class="weui-cells weui-cells_form" style="margin-top: 0px;">
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label for="" class="weui-label">用户名称(全称)</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text">
+                    <span>{{formData.name}}</span>
                 </div>
-                <i class="weui-icon-safe-warn">★</i>
             </div>
-            <div class="weui-cell">
+            <div class="weui-cell {{validate.linkName?'weui-cell_warn':''}}">
                 <div class="weui-cell__hd"><label for="" class="weui-label">联系人</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text">
+                    <input class="weui-input" type="text" ng-model="$parent.formData.linkName" ng-change="doFill($parent.formData.linkName, 'linkName')">
                 </div>
-                <i class="weui-icon-safe-warn">★</i>
+                <i class="icon ion-ios-star" ng-hide="validate.linkName" style="color: #0BB20C;"></i>
+                <i class="icon ion-information-circled" ng-show="validate.linkName"></i>
             </div>
-            <div class="weui-cell weui-cell_select weui-cell_select-after">
-                <div class="weui-cell__hd">
-                    <label for="" class="weui-label">空调机型</label>
-                </div>
+            <div class="weui-cell {{validate.linkPhone?'weui-cell_warn':''}}">
+                <div class="weui-cell__hd"><label for="" class="weui-label">联系人电话</label></div>
                 <div class="weui-cell__bd">
-                    <select class="weui-select" name="select2">
-                        <option value="1">商用空调机1</option>
-                        <option value="2">商用空调机2</option>
-                        <option value="3">商用空调机3</option>
-                    </select>
+                    <input class="weui-input" type="tel" ng-model="$parent.formData.linkPhone" ng-change="doFill($parent.formData.linkPhone, 'linkPhone')">
                 </div>
+                <i class="icon ion-ios-star" ng-hide="validate.linkPhone" style="color: #0BB20C;"></i>
+                <i class="icon ion-information-circled" ng-show="validate.linkPhone"></i>
             </div>
-            <div class="weui-cell weui-cell_select weui-cell_select-after">
-                <div class="weui-cell__hd">
-                    <label for="" class="weui-label">空调品牌</label>
-                </div>
+            <div class="weui-cell {{validate.machineType?'weui-cell_warn':''}}">
+                <div class="weui-cell__hd"><label for="" class="weui-label">空调机型</label></div>
                 <div class="weui-cell__bd">
-                    <select class="weui-select" name="select2">
-                        <option value="1">格力中央空调1</option>
-                        <option value="2">格力中央空调2</option>
-                        <option value="3">格力中央空调3</option>
-                    </select>
+                    <input class="weui-input" type="tel" ng-model="$parent.formData.machineType" ng-change="doFill($parent.formData.machineType, 'machineType')">
                 </div>
+                <i class="icon ion-ios-star" ng-hide="validate.machineType" style="color: #0BB20C;"></i>
+                <i class="icon ion-information-circled" ng-show="validate.machineType"></i>
             </div>
-            <div class="weui-cell">
+            <div class="weui-cell {{validate.brand?'weui-cell_warn':''}}">
+                <div class="weui-cell__hd"><label for="" class="weui-label">空调品牌</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="tel" ng-model="$parent.formData.brand" ng-change="doFill($parent.formData.brand, 'brand')">
+                </div>
+                <i class="icon ion-ios-star" ng-hide="validate.brand" style="color: #0BB20C;"></i>
+                <i class="icon ion-information-circled" ng-show="validate.brand"></i>
+            </div>
+            <div class="weui-cell {{validate.machineGroup?'weui-cell_warn':''}}">
                 <div class="weui-cell__hd">
                     <label class="weui-label">机组型号</label>
                 </div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text">
+                    <input class="weui-input" type="text" ng-model="$parent.formData.machineGroup" ng-change="doFill($parent.formData.machineGroup, 'machineGroup')">
+                </div>
+                <i class="icon ion-ios-star" ng-hide="validate.machineGroup" style="color: #0BB20C;"></i>
+                <i class="icon ion-information-circled" ng-show="validate.machineGroup"></i>
+            </div>
+            <div class="weui-cell {{validate.machineInnerType?'weui-cell_warn':''}}">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">机内编号</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" ng-model="$parent.formData.machineInnerType" ng-change="doFill($parent.formData.machineInnerType, 'machineInnerType')">
+                </div>
+                <i class="icon ion-ios-star" ng-hide="validate.machineInnerType" style="color: #0BB20C;"></i>
+                <i class="icon ion-information-circled" ng-show="validate.machineInnerType"></i>
+            </div>
+            <div class="weui-cell {{validate.machineOuterType?'weui-cell_warn':''}}">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">外机编号</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" ng-model="$parent.formData.machineOuterType" ng-change="doFill($parent.formData.machineOuterType, 'machineOuterType')">
+                </div>
+                <i class="icon ion-ios-star" ng-hide="validate.machineOuterType" style="color: #0BB20C;"></i>
+                <i class="icon ion-information-circled" ng-show="validate.machineOuterType"></i>
+            </div>
+            <div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">服务地址</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <select class="weui-select" ng-model="$parent.formData.addressId">
+                        <option value="1">服务地址1</option>
+                        <option value="2">服务地址2</option>
+                        <option value="3">服务地址3</option>
+                    </select>
                 </div>
             </div>
             <div class="weui-cell">
-                <div class="weui-cell__hd">
-                    <label class="weui-label">故障现象</label>
-                </div>
+                <div class="weui-cell__hd"><label for="" class="weui-label">服务开始时间</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text">
+                    <input class="weui-input" type="date" ng-model="$parent.formData.serveBeginTime">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label for="" class="weui-label">服务结束时间</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="date" ng-model="$parent.formData.serveEndTime">
                 </div>
             </div>
         </div>
@@ -61,6 +99,7 @@
         </div>
     </ion-content>
     <ion-footer-bar class="bar bar-footer button-bar" style="height: 50px;border-top-width: 0;">
-        <button class="button button-positive" style="font-size: inherit;font-weight: 450;">提 交</button>
+        <button class="button button-positive" style="font-size: inherit;font-weight: 450;" ng-click="doSubmit(formData)">确定</button>
     </ion-footer-bar>
 </ion-view>
+

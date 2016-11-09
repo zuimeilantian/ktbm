@@ -18,9 +18,13 @@ require.config({
 
         services:'services/services',
         registerServices: 'services/registerServices',
-
+        mainServices: 'services/mainServices',
+        orderServices:'services/orderServices',
+        
+        
         indexCtrl:'controllers/indexCtrl',
         registerCtrl:'controllers/registerCtrl',
+        orderCtrl:'controllers/orderCtrl',
         controllers:'controllers/controllers',
         directives:'directives/directives',
     },

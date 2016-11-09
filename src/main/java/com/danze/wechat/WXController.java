@@ -15,10 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
 
 @Controller
-@RequestMapping("/wechat")
 public class WXController {
 
 	private static String TOKEN = "wuzhong";
@@ -30,7 +28,7 @@ public class WXController {
 	private String secret;
 	
 	
-	@RequestMapping("/check")
+	@RequestMapping("/wechat/check")
 	@ResponseBody
 	public void sign(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 微信加密签名
@@ -81,6 +79,9 @@ public class WXController {
 		    
 //		    Map<String, Object> m = (Map<String, Object>) JSON.parse(v);
 //		    m.get("openid");
+		    
+		    request.getRequestDispatcher("#/order-form").forward(request, response);
+		    
 		    
 		} catch (Exception e) {
 			e.printStackTrace();

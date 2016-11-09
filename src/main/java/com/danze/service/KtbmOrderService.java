@@ -82,8 +82,8 @@ public class KtbmOrderService extends BaseService implements KtbmOrderImpl {
 		if(!"".equals(machineOuterType)){
 			sql += " and a.machineOuterType like '%"+machineOuterType+"%' ";
 		}
-		if(!"".equals(no)){
-			sql += " and a.status= '"+status+"' ";
+		if(!"".equals(status)){
+			sql += " and a.status in ("+status+") ";
 		}
 		map.put("count", dao.getList(sql, null).size());//总记录数
 		sql += " order by a.createdTime desc limit "+size+" offset "+offset;
@@ -104,7 +104,8 @@ public class KtbmOrderService extends BaseService implements KtbmOrderImpl {
 			String linkName = this.getStringParam(dataMap, "linkName");//联系人
 			String linkPhone = this.getStringParam(dataMap, "linkPhone");//联系电话
 			String addressId = this.getStringParam(dataMap, "addressId");//服务地址
-			String serveTime = this.getStringParam(dataMap, "serveTime");//预约服务时间
+			String serveBeginTime = this.getStringParam(dataMap, "serveBeginTime");//预约服务时间
+			String serveEndTime = this.getStringParam(dataMap, "serveEndTime");//预约服务时间
 			String groupId = this.getStringParam(dataMap, "groupId");//维修分公司id（部门）
 			String brand = this.getStringParam(dataMap, "brand");//品牌
 			String machineGroup = this.getStringParam(dataMap, "machineGroup");//型号
@@ -115,18 +116,18 @@ public class KtbmOrderService extends BaseService implements KtbmOrderImpl {
 			String sql = "";
 			if(!"".equals(id)){//修改
 				sql = "update ktbm_order a "
-					 + "       set no=?,cusId=?,linkName=?,linkPhone=?,addressId=?,serveTime=?,"
+					 + "       set no=?,cusId=?,linkName=?,linkPhone=?,addressId=?,serveBeginTime=?,serveEndTime=?,"
 			         + "            groupId=?,brand=?,machineGroup=?,machineType=?,machineInnerType=?,"
 			         + "            machineOuterType=?,lastModifiedTime=? "
 			         + " where a.id=? ";
-				dao.CUD(sql, new Object[]{no,cusId,linkName,linkPhone,addressId,serveTime,groupId,
+				dao.CUD(sql, new Object[]{no,cusId,linkName,linkPhone,addressId,serveBeginTime,serveEndTime,groupId,
 						brand,machineGroup,machineType,machineInnerType,machineOuterType,operTime,id});
 			}else{//新增
 				//保存数据
-				sql = "insert into ktbm_order(no,cusId,linkName,linkPhone,addressId,serveTime,groupId,"
+				sql = "insert into ktbm_order(no,cusId,linkName,linkPhone,addressId,serveBeginTime,serveEndTime,groupId,"
 			         + "brand,machineGroup,machineType,machineInnerType,machineOuterType,createdTime,lastModifiedTime,status) "
-			         + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,101)";
-				dao.CUD(sql, new Object[]{no,cusId,linkName,linkPhone,addressId,serveTime,groupId,
+			         + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,101)";
+				dao.CUD(sql, new Object[]{no,cusId,linkName,linkPhone,addressId,serveBeginTime,serveEndTime,groupId,
 					brand,machineGroup,machineType,machineInnerType,machineOuterType,operTime,operTime});
 			}
 			map.put("success", "1");
@@ -172,11 +173,11 @@ public class KtbmOrderService extends BaseService implements KtbmOrderImpl {
 				 + "values('"+orderId+"','"+dealType+"','"+dealId+"','"+dealTime+"','"+nextDealId+"','"+allcover+"','"+malfunction+"') ";
 			sqls[1]=sql;
 			dao.batchUpdate(sqls);
-			map.put("resultflag", "1");
-			map.put("resultMgr", "保存成功！");
+			map.put("success", "1");
+			map.put("msg", "保存成功！");
 		} catch(Exception e){
-			map.put("resultflag", "0");
-			map.put("resultMgr", "保存失败！");
+			map.put("success", "0");
+			map.put("msg", "保存失败！");
 		}
 		return map;
 	}
@@ -218,11 +219,11 @@ public class KtbmOrderService extends BaseService implements KtbmOrderImpl {
 			//获取订单信息
 			sql = "update ktbm_order a set a.status=100 where a.id=? ";
 			dao.CUD(sql, new Object[]{id});
-			map.put("resultflag", "1");
-			map.put("resultMgr", "删除成功！");
+			map.put("success", "1");
+			map.put("msg", "删除成功！");
 		}catch(Exception e){
-			map.put("resultflag", "0");
-			map.put("resultMgr", "删除失败！");
+			map.put("success", "0");
+			map.put("msg", "删除失败！");
 		}
 		return map;
 	}

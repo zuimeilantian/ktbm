@@ -3,9 +3,9 @@
  */
 define(function () {
     'use strict';
-    function ctrl($scope, $registerServices) {
+    function ctrl($scope, $registerServices, $ionicPopup, $mainServices) {
         var second = 60, timer, flag = true;
-        function getTimes(){
+        function countdown(){
             var $code = $("#verification"),
                 _width = $code.width();
 
@@ -22,20 +22,23 @@ define(function () {
                 clearTimeout(timer);
             }
         }
-        $scope.getVerificode = function(){
+        $scope.getVerificode = function(phone){
             if(flag){
-                console.log('111')
-                getTimes();
+                if(!(/^1(3|4|5|7|8)\d{9}$/.test(phone))){
+                    $mainServices.alert('warning', '手机号码有误，请重填');
+                }else{
+                    countdown();
+                    /* $registerServices.getCode('xx', function(data){
+                        console.log(data)
+                     })*/
+                }
             }
         };
 
-       /* $registerServices.getCode('xx', function(data){
-            console.log(data)
-        })*/
 
     }
 
-    ctrl.$inject = ['$scope', '$registerServices'];
+    ctrl.$inject = ['$scope', '$registerServices', '$ionicPopup', '$mainServices'];
     return ctrl;
 
 });

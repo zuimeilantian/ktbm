@@ -8,6 +8,11 @@ define(['app'], function(app) {
                     templateUrl: 'templates/register/register.tpl.html',
                     controller: 'registerCtrl'
                 })
+                .state('order-form', {
+                    url: '/order-form',
+                    templateUrl: 'templates/order/order-form.tpl.html',
+                    controller: 'orderCtrl'
+                })
                 .state('bonus', {
                     url: '/bonus',
                     templateUrl: 'templates/bonus/bonus.tpl.html',
@@ -24,16 +29,7 @@ define(['app'], function(app) {
                 templateUrl: 'templates/bonus/bonus-exchange.tpl.html',
                  controller: 'indexCtrl'
             })
-            .state('order', {
-                url: '/order',
-                templateUrl: 'templates/order/order-form.tpl.html',
-                 controller: 'indexCtrl'
-            })
-            .state('seraddrtime', { //服务地址
-                url: '/seraddrtime',
-                templateUrl: 'templates/order/ser-addr-time.tpl.html',
-                controller: 'indexCtrl'
-            })
+
                 .state('presonal', { //个人中心
                     url: '/presonal',
                     templateUrl: 'templates/order/presonal.tpl.html',
