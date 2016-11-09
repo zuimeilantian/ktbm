@@ -59,7 +59,7 @@ public class WXController {
 		String v = "";
 		try {
 			String code = request.getParameter("code");
-			String urlStr = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+appid+"&secret="+secret+"&code="+code+"+&grant_type=authorization_code";
+			String urlStr = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+appid+"&secret="+secret+"&code="+code+"&grant_type=authorization_code";
 			
 			URL url = new URL(urlStr);
 			HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
