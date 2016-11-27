@@ -1,36 +1,58 @@
 package com.danze.wechat;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.danze.dao.CircleDAO;
+import com.danze.filter.OpenIdFilter;
+import com.danze.filter.RequestFilter;
+import com.danze.service.CustomerService;
+import com.danze.service.WeChatService;
+import com.danze.utils.CollectionUtils;
+import com.danze.utils.HttpUtils;
+import com.danze.utils.MapUtils;
 
 @Controller
-public class WXController {
+public class WXController{
 
-	private static String TOKEN = "wuzhong";
-//	private static String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx4ecdc814aa5b1fca&secret=510be9685fa5d47e4ffd61d56adff804&code=#CODE#&grant_type=authorization_code";
 
 	@Value("#{configProperties['wechat.appid']}")
 	private String appid;
 	@Value("#{configProperties['wechat.secret']}")
 	private String secret;
+	@Value("#{configProperties['wechat.token']}")
+	private String token;
 	
+	@Resource
+	private CircleDAO dao;
 	
-	@RequestMapping("/wechat/check")
+	@Resource
+	private CustomerService customerService;
+	
+	@Resource
+	private WeChatService weService;
+	
+	private Logger log = LoggerFactory.getLogger(this.getClass());
+	
+	@RequestMapping("wechat/check")
 	@ResponseBody
-	public void sign(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public synchronized void sign(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		weService.processRequest(request);
+		
 		// 微信加密签名
 		String signature = request.getParameter("signature");
 		// 随机字符串
@@ -39,8 +61,7 @@ public class WXController {
 		String timestamp = request.getParameter("timestamp");
 		// 随机数
 		String nonce = request.getParameter("nonce");
-		System.out.println(signature);
-		String[] str = { TOKEN, timestamp, nonce };
+		String[] str = { token, timestamp, nonce };
 		Arrays.sort(str); // 字典序排序
 		String bigStr = str[0] + str[1] + str[2];
 		// SHA1加密
@@ -53,40 +74,67 @@ public class WXController {
 
 	@RequestMapping("/openid")
 	@ResponseBody
-	public String getOpenId(HttpServletRequest request,HttpServletResponse response) throws IOException {
-		String v = "";
+	public synchronized void getOpenId(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		try {
-			String code = request.getParameter("code");
-			String urlStr = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="+appid+"&secret="+secret+"&code="+code+"&grant_type=authorization_code";
-			
-			URL url = new URL(urlStr);
-			HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
-		    httpURLConnection.setDoInput(true);
-		    httpURLConnection.setDoOutput(true);        // 设置该连接是可以输出的
-		    httpURLConnection.setRequestMethod("POST"); // 设置请求方式
-		    httpURLConnection.setRequestProperty("charset", "utf-8");
-
-		    BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(),"utf-8"));
-		    String line = null;
-		    StringBuilder sb = new StringBuilder();
-		    while ((line = br.readLine()) != null) {    // 读取数据
-		        sb.append(line + "\n");
-		    }
-		    
-		    v = sb.toString();
-		    System.out.println(sb.toString());
-		    
-//		    Map<String, Object> m = (Map<String, Object>) JSON.parse(v);
-//		    m.get("openid");
-		    
-		    request.getRequestDispatcher("#/order-form").forward(request, response);
-		    
-		    
+			String state = request.getParameter("state");
+			HttpServletRequest req = RequestFilter.threadLocalRequest.get();
+			Object obj = req.getSession().getAttribute("openid");
+			String openid = "";
+			if(obj==null){
+				System.out.println("/openid: openid is null"  ); 
+			}else {
+				openid = obj.toString();
+			}
+			if(openid!=null&&openid.equals("")){
+				System.out.println("/openid:" + "getopenid");
+				String code = request.getParameter("code");
+				Map<String, Object> map = HttpUtils.getToken(code, appid, secret);
+				openid = MapUtils.getString(map, "openid");
+			}
+			if(!openid.equals("")){
+				OpenIdFilter.setOpenId(openid);
+			}
+			if(!customerService.isRegister()){
+				state = "index.html#/register/"+state;
+			}
+			else {
+				state = "index.html#/"+state;
+			}
+			response.sendRedirect(state);
 		} catch (Exception e) {
+			log.error(e.toString());
 			e.printStackTrace();
 		}
-		return v;
 	}
-
+	
+	@RequestMapping("/getPower")
+	@ResponseBody
+	public synchronized void getPower(HttpServletRequest request,HttpServletResponse response) throws IOException {
+		try {
+			String code = request.getParameter("code");
+			Map<String, Object> map = HttpUtils.getToken(code, appid, secret);
+			String openid = MapUtils.getString(map, "openid");
+			String state = "index.html#/register/personal";
+			if(!openid.equals("")){
+				System.out.println("getBack:openid:" + openid);
+				request.getSession().setAttribute("openid", openid);
+				OpenIdFilter.setOpenId(openid);
+				String sql = "select * from ktbm_customer where openid = ?";
+				List<Map<String, Object>> lists = dao.getList(sql, new Object[]{openid});
+				if(CollectionUtils.isEmpty(lists)){
+					sql = "insert into ktbm_customer(wechatId,openid,points) values(?,?,?)";
+					dao.CUD(sql, new Object[]{openid,openid,0});
+				}
+				if(customerService.isRegister()){
+					state = "index.html#/personal";
+				}
+			}
+			response.sendRedirect(state);
+		}
+		catch(Exception e){
+			log.error(e.toString());
+			e.printStackTrace();
+		}
+	}
+	
 }

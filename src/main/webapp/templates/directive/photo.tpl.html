@@ -2,17 +2,17 @@
     <div class="weui-cell__hd"><label class="weui-label">照片</label></div>
     <div class="weui-cell__bd">
         <i class="icon ion-android-camera photo-camera" ng-click="cameraClick()"></i>
-        <input id="uploaderInput" type="file" type="file" accept="image/*" multiple style="display: none">
+        <input id="uploaderInput" type="file" accept="image/*" capture="camera" multiple style="display: none">
     </div>
 </div>
-<div class="weui-progress photo-progress" ng-repeat="img in uploadImgs">
-    <a href="javascript:;" class="photo-progress-image" id="uploaderFiles" ng-click="checkImg(img)">
-        <img src="{{img.src}}" width="80%" alt="">
+<div class="weui-progress photo-progress" ng-repeat="item in display">
+    <a href="javascript:;" class="photo-progress-image" id="uploaderFiles" ng-click="checkImg(item)">
+        <img ng-if="item.src" src="{{item.src}}" width="80%" alt="">
     </a>
     <div class="weui-progress__bar">
-        <div class="weui-progress__inner-bar js_progress" style="width: 100%;"></div>
+        <section id="file-progress-{{item.timestamp}}" class="weui-progress__inner-bar js_progress"></section>
     </div>
-    <a href="javascript:;" class="weui-progress__opr" ng-click="removeImg($index)">
+    <a href="javascript:;" class="weui-progress__opr" ng-click="removeImg(item, $index)">
         <i class="weui-icon-cancel"></i>
     </a>
 </div>

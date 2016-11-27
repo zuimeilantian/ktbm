@@ -1,0 +1,8 @@
+<2016-11-24 14:50:04> [INFO ]-[com.danze.wechat.WXController:143] info
+<2016-11-24 14:50:04> [DEBUG]-[com.danze.wechat.WXController:144] debug
+<2016-11-24 14:50:04> [ERROR]-[com.danze.wechat.WXController:145] error
+<2016-11-24 14:50:04> [WARN ]-[com.danze.wechat.WXController:146] warm
+<2016-11-24 16:40:59> [ERROR]-[com.danze.utils.TokenUtils:80] java.net.MalformedURLException: unknown protocol: httpwws
+<2016-11-24 16:42:39> [ERROR]-[com.danze.utils.TokenUtils:80] unknown protocol: httpwws
+<2016-11-24 16:51:13> [ERROR]-[com.danze.utils.TokenUtils:80] unknown protocol: httpwwsunknown protocol: httpwwsnull
+<2016-11-24 16:51:35> [ERROR]-[com.danze.utils.TokenUtils:80] java.net.MalformedURLException: unknown protocol: httpwws

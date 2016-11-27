@@ -23,7 +23,7 @@ public class StringUtils {
 			String[] strings = obj.toString().split(",");
 			if(strings!=null){
 				for(String s:strings){
-					ls.add(s);
+					ls.add(s.toString());
 				}
 			}
 		}

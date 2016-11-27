@@ -185,7 +185,7 @@ public final class DateUtils {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
 			long t = format.parse(time).getTime();
-			if(t>new Date().getTime()){
+			if(t<new Date().getTime()){
 				flag = true;
 			}
 		} catch (ParseException e) {

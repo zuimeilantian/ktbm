@@ -8,8 +8,10 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.danze.service.GoodService;
+import com.danze.utils.JsonResult;
 
 @Controller
 @RequestMapping("/good")
@@ -26,6 +28,7 @@ public class GoodCtrl {
 	 * 2016年11月8日
 	 */
 	@RequestMapping("/getGoods")
+	@ResponseBody
 	public Map<String, Object> getGoods(@RequestBody Map<String, Object> map){
 		Map<String, Object> m = new HashMap<String, Object>();
 		m = goodService.getGoods(map);
@@ -33,15 +36,35 @@ public class GoodCtrl {
 	}
 	
 	/**
-	 * 购买
+	 * 兑换商品
 	 * JZY
 	 * @param map
 	 * @return
 	 * 2016年11月8日
 	 */
 	@RequestMapping("/byGoods")
-	public Map<String, Object> byGoods(@RequestBody Map<String, Object> map){
-		return new HashMap<String, Object>();
+	@ResponseBody
+	public JsonResult byGoods(@RequestBody Map<String, Object> list){
+		JsonResult jsonResult = new JsonResult(true);
+		jsonResult= goodService.byGoods(list);
+		return jsonResult;
 	}
+	
+	
+	/**
+	 * 获取商品 兑换记录
+	 * JZY
+	 * @param map
+	 * @return
+	 * 2016年11月8日
+	 */
+	@RequestMapping("/getGoodsRecord")
+	@ResponseBody
+	public Map<String, Object> getGoodsRecord(@RequestBody Map<String,Object> map){
+		Map<String, Object> rep = new HashMap<String, Object>();
+		rep = goodService.getGoodsRecord(map);
+		return rep;
+	}
+	
 	
 }

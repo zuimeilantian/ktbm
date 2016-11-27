@@ -1,0 +1,15 @@
+<ion-popover-view>
+    <ion-content>
+        <div class="list">
+            <a href="javascript:;" class="item" ng-repeat="item in list track by $index" ng-click="doSelect(item)">
+                {{item.name}}
+            </a>
+        </div>
+        <div class="list list-inset">
+            <label class="item item-input">
+                <input type="text" placeholder="手动输入" ng-model="dataField">
+            </label>
+            <button class="button button-positive button-small button-block" ng-click="doInput(dataField)"><i class="icon ion-checkmark-round"></i></button>
+        </div>
+    </ion-content>
+</ion-popover-view>

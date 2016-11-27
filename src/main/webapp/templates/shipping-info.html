@@ -1,0 +1,27 @@
+<ion-modal-view>
+    <ion-header-bar align-title="center" class="bar-positive">
+        <button class="button button-icon icon ion-ios-arrow-back" ng-click="closeShop()"></button>
+        <h1 class="title">填写收获信息</h1>
+        <button class="button button-clear button-small" ng-click="addAddress()">添加地址</button>
+    </ion-header-bar>
+    <ion-content overflow-scroll="false">
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">联系方式</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="tel" ng-model="$parent.formData.phone">
+                </div>
+            </div>
+            <div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">收货地址</label>
+                </div>
+                <select class="weui-select" ng-options="item.id as item.address for item in address" ng-model="$parent.formData.address"></select>
+            </div>
+
+        </div>
+    </ion-content>
+    <ion-footer-bar class="bar bar-footer button-bar" style="height: 50px;border-top-width: 0;">
+        <button class="button button-positive wechat-footer-button" ng-click="goExchange(formData)">去兑换</button>
+    </ion-footer-bar>
+</ion-modal-view>

@@ -165,28 +165,4 @@ public class CircleDAO{
 			return false;
 		}
 	}
-	public static void main(String[] args) {
-		BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/oa?useUnicode=true&characterEncoding=utf-8");
-		dataSource.setUsername("root");
-		dataSource.setPassword("root123");
-		CircleDAO dao = new CircleDAO();
-		dao.setDataSource(dataSource);
-		JdbcTemplate jt = dao.getJdbcTemplate();
-		SqlRowSet sqlRowSet = jt.queryForRowSet("select * from _app_hyssq limit 1");
-		SqlRowSetMetaData sqlRsmd = sqlRowSet.getMetaData();
-		int columnCount = sqlRsmd.getColumnCount();
-		for (int i = 1; i <= columnCount; i++) {
-		Map<String,String> fieldMap = new HashMap<String,String>();
-			if(!sqlRsmd.getColumnName(i).equals("created_by")){
-				fieldMap.put("name", sqlRsmd.getColumnName(i));
-				System.out.println(sqlRsmd.getColumnName(i));
-				fieldMap.put("fieldType", String.valueOf(sqlRsmd.getColumnTypeName(i)));
-				System.out.println(sqlRsmd.getColumnTypeName(i));
-				
-			}
-		}
-		jt.execute("ALTER TABLE p ADD test varchar(255)");
-	}
 }

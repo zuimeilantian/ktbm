@@ -1,19 +1,20 @@
 package com.danze.controller;
 
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.danze.filter.OpenIdFilter;
 import com.danze.service.MsgService;
 import com.danze.utils.JsonResult;
 import com.danze.utils.MapUtils;
+import com.danze.utils.MsgUtils;
 
 @Controller
 @RequestMapping("/msg")
@@ -34,17 +35,16 @@ public class MsgCtrl {
 	@ResponseBody
 	public JsonResult sendMsg(@RequestBody Map<String, Object> map) {
 		JsonResult jsonResult = new JsonResult(true);
-		String user = "123";
+		String openid = OpenIdFilter.getOpenId();
 		try {
 			String phone = MapUtils.getString(map, "phone", "");
-			String regExp = "^[1][3,4,5,8][0-9]{9}$";  
-			Pattern p = Pattern.compile(regExp);  
-			Matcher m = p.matcher(phone);  
-			if (m.find()) {
-				//msgService.sendMsg(phone, user);
+			if (MsgUtils.validPhone(phone)) {
+				String msg = msgService.sendMsg(phone, openid);
+				if(!msg.equals("ok")){
+					jsonResult.setFail(msg);
+				}
 			}else{
 				jsonResult.setFail("手机号不合法");
-				return jsonResult;
 			}
 		} catch (Exception e) {
 			jsonResult.setFail("系统异常，请稍后再试。");
@@ -63,58 +63,26 @@ public class MsgCtrl {
 	 */
 	@RequestMapping("/register")
 	@ResponseBody
-	public JsonResult register(@RequestBody Map<String, Object> map) {
+	public JsonResult register(@RequestBody Map<String, Object> map,HttpServletRequest request) {
 		JsonResult jsonResult = new JsonResult(true);
 		try {
 			String phone = MapUtils.getString(map, "phone", "");
-			String regExp = "^[1][3,4,5,8][0-9]{9}$";  
-			Pattern p = Pattern.compile(regExp);  
-			Matcher m = p.matcher(phone);  
-			if (!m.find()) {
+			if (!MsgUtils.validPhone(phone)) {
 				jsonResult.setFail("手机号不合法");
 				return jsonResult;
 			}
-			String user = "123";
-			//
+			String openId = OpenIdFilter.getOpenId();
 			String code = MapUtils.getString(map, "code", "");
 			if(code.equals("")){
 				jsonResult.setFail("没有验证码");
 				return jsonResult;
 			}
-			jsonResult = msgService.register(phone,code,user);
+			jsonResult = msgService.register(phone,code,openId);
 		} catch (Exception e) {
 			jsonResult.setFail("系统异常，请稍后再试。");
 			e.printStackTrace();
 		}
 		return jsonResult;
 	}
-	
-	/**
-	 * 校验是否绑定手机号
-	 * JZY
-	 * @param map
-	 * @return
-	 * 2016年11月8日
-	 */
-	@RequestMapping("/getPhone")
-	@ResponseBody
-	public JsonResult getPhone(@RequestBody Map<String, Object> map) {
-		JsonResult jsonResult = new JsonResult(true);
-		try {
-			String wecharId = MapUtils.getString(map, "wecharId", "");
-			if(wecharId.equals("")){
-				jsonResult.setFail("？？？");
-				return jsonResult;
-			}
-			jsonResult = msgService.getPhone(wecharId);
-		} catch (Exception e) {
-			jsonResult.setFail("系统异常，请稍后再试。");
-			e.printStackTrace();
-		}
-		
-		return jsonResult;
-	}
-	
-	
 	
 }

@@ -1,0 +1,175 @@
+<ion-view>
+    <ion-header-bar></ion-header-bar>
+    <ion-content overflow-scroll='false'>
+        <nav class="nav-box">
+            <ul>
+                <li ng-click="selectType(0)" class="active"><span>未接单</span></li>
+                <li ng-click="selectType(1)"><span>未分配</span></li>
+                <li ng-click="selectType(2)"><span>未签到</span></li>
+                <li ng-click="selectType(3)"><span>进行中</span></li>
+                <li ng-click="selectType(4)"><span>完成</span></li>
+            </ul>
+            <div class="dot-line"></div>
+        </nav>
+        <ion-refresher pulling-text="下拉刷新..." on-refresh="doRefresh()"></ion-refresher>
+        <ion-slide-box does-continue="false" show-pager="false" auto-play="false" on-slide-changed="go_changed(index)" active-slide="index" pager-click="go(index)">
+            <ion-slide>
+                <ion-list>
+                    <ion-item  style="margin-top: 8px;" ng-repeat="item in noSignLIst">
+                        <span class="item-status-label">{{item.statusName}}</span>
+                        <div class="weui-flex">
+                            <div class="weui-flex__item" style="position: relative;">
+                                <p>订单编号: {{item.no}}</p>
+                                <p>空调机型: {{item.machineType}}</p>
+                                <p>机组型号: {{item.machineGroup}}</p>
+                                <p>空调品牌: {{item.brand}}</p>
+                                <p>地址: {{item.address}}</p>
+                                <p>故障现象: {{item.malfunction}}</p>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </ion-slide>
+            <ion-slide>
+                <ion-list>
+                    <ion-item  style="margin-top: 8px;" ng-repeat="item in unallocatedList">
+                        <span class="item-status-label">{{item.statusName}}</span>
+                        <div class="weui-flex">
+                            <div class="weui-flex__item" style="position: relative;">
+                                <p>订单编号: {{item.no}}</p>
+                                <p>空调机型: {{item.machineType}}</p>
+                                <p>机组型号: {{item.machineGroup}}</p>
+                                <p>空调品牌: {{item.brand}}</p>
+                                <p>地址: {{item.address}}</p>
+                                <p>故障现象: {{item.malfunction}}</p>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </ion-slide>
+            <ion-slide>
+                <ion-list>
+                    <ion-item  style="margin-top: 8px;" ng-repeat="item in noCheckInList">
+                        <span class="item-status-label">{{item.statusName}}</span>
+                        <div class="weui-flex">
+                            <div class="weui-flex__item" style="position: relative;">
+                                <p>订单编号: {{item.no}}</p>
+                                <p>空调机型: {{item.machineType}}</p>
+                                <p>机组型号: {{item.machineGroup}}</p>
+                                <p>空调品牌: {{item.brand}}</p>
+                                <p>地址: {{item.address}}</p>
+                                <p>故障现象: {{item.malfunction}}</p>
+
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </ion-slide>
+            <ion-slide>
+                <ion-list>
+                    <ion-item  style="margin-top: 8px;" ng-repeat="item in ongoingList">
+                        <span class="item-status-label">{{item.statusName}}</span>
+                        <div class="weui-flex">
+                            <div class="weui-flex__item" style="position: relative;">
+                                <p>订单编号: {{item.no}}</p>
+                                <p>空调机型: {{item.machineType}}</p>
+                                <p>机组型号: {{item.machineGroup}}</p>
+                                <p>空调品牌: {{item.brand}}</p>
+                                <p>地址: {{item.address}}</p>
+                                <p>故障现象: {{item.malfunction}}</p>
+                                <p ng-click="openDetail(item, $event)">详情信息 <i class="icon ion-chevron-down"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </ion-slide>
+            <ion-slide>
+                <ion-list>
+                    <ion-item  style="margin-top: 8px;" ng-repeat="item in completeList">
+                        <span class="item-status-label">{{item.statusName}}</span>
+                        <div class="weui-flex">
+                            <div class="weui-flex__item" style="position: relative;">
+                                <p>订单编号: {{item.no}}</p>
+                                <p>维修公司名: {{item.groupName || '无'}}</p>
+                                <p ng-click="openDetail(item, $event)">详情信息 <i class="icon ion-chevron-{{flag?'up':'down'}}"></i>
+                                    <a href="javascript:;"  style="float: right;text-decoration: underline;" ng-click="rated($event, item);">评价 ></a>
+                                </p>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </ion-slide>
+        </ion-slide-box>
+    </ion-content>
+</ion-view>
+<script id="detail.modal.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar align-title="center" class="bar-positive">
+            <h1 class="title">详情</h1>
+            <button class="button button-icon icon ion-ios-close-empty" ng-click="closeDetail()"></button>
+        </ion-header-bar>
+        <ion-content overflow-scroll="false" class="padding">
+            <p>订单编号: {{display.no}}</p>
+            <p>维修公司名: {{display.groupName}}</p>
+            <p>维修地址: {{display.province+display.city+display.district+display.detail}}</p>
+            <p>空调机型: {{display.machineType}}</p>
+            <p>机组型号: {{display.machineGroup}}</p>
+            <p>机内编号: {{display.machineInnerType}}</p>
+            <p>外机编号: {{display.machineOuterType}}</p>
+            <p>空调品牌: {{display.brand}}</p>
+            <h5>处理信息: {{display.orderdeallist?'':': 无'}}</h5>
+            <div class="list list-inset">
+                <div class="item" ng-repeat="item in display.orderdeallist">
+                    <p>处理类型: {{item.dealTypeName}}</p>
+                    <p>处理人: {{item.dealName}}
+                        <span><i class="icon ion-social-whatsapp balanced" style="font-size: 18px;"></i>  <a href="tel:{{item.mobile}}">{{item.mobile}}</a></span>
+                        <span><i class="icon ion-chatbubble-working balanced" style="font-size: 18px;" ng-click="chatIM(item.dealId)"></i> </span>
+                    </p>
+                    <p>处理时间: {{item.dealTime}}</p>
+                    <p>接收人: {{item.nextDealName}}</p>
+                    <p>质保情况: {{item.allcoverName}}</p>
+                    <p>故障现象: {{item.malfunction}}</p>
+                </div>
+            </div>
+        </ion-content>
+    </ion-modal-view>
+</script>
+<script id="rate_modal.tpl.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar align-title="center" class="bar-positive">
+            <button class="button button-clear" ng-click="closeModal()">取消</button>
+            <h1 class="title">评价</h1>
+            <button class="button button-clear" ng-click="public(ratedObj)">发表</button>
+        </ion-header-bar>
+        <ion-content class="has-header">
+            <section class="item">
+                <p>维修公司名: {{ratedObj.groupName}}</p>
+                <p>评价时间: {{ratedObj.operDate || '无'}}</p>
+                <p>订单编号: {{ratedObj.no || '无'}}</p>
+                <p>派遣维修人员:  <c-mark mark="ratedObj.orderevaluationgroup.groupStar" preset="ratedObj.orderevaluationgroup.groupStar"></c-mark></p>
+            </section>
+            <h5 style="margin-left: 10px;">派遣维修人员信息</h5>
+            <div class="weui-flex item" style="margin-top: 8px;" ng-repeat="item in $parent.ratedObj.orderevaluationusers">
+                <div class="weui-flex__item">
+                    <p>员工姓名: {{item.userName}}</p>
+                    <p>评价时间: {{item.operDate || '无'}}</p>
+                    <p>订单编号: {{ratedObj.no || '无'}}</p>
+                   <!-- <p>工作经验: </p>-->
+                    <!--<p>所属公司: 江苏格力空调有限公司分部</p>-->
+                    <p>星评:
+                        <c-mark mark="item.userStar" preset="item.userStar"></c-mark>
+                    </p>
+                </div>
+                <div class="weui-flex__item" style="position: relative;">
+                    <img src="{{item.userIcon}}" onerror="this.src='img/default_avatar.png'" style="position: absolute;right: 0;bottom: 0;left: 0;top: 0;margin: auto;" width="100%" alt="">
+                </div>
+            </div>
+            <div class="list" style="margin-top: 8px;">
+                <label class="item item-input">
+                    <textarea class="weui-textarea" placeholder="反馈意见" rows="4" ng-model="$parent.ratedObj.orderevaluationgroup.details"></textarea>
+                </label>
+            </div>
+        </ion-content>
+    </ion-modal-view>
+</script>

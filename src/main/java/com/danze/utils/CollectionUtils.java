@@ -24,21 +24,21 @@ public class CollectionUtils {
 		return (map == null || map.isEmpty());
 	}
 	
-	public static String list2String(Object list){
+	public static String list2String(Object list,String split){
 		String resutl="";
 		if(list!=null){
 			try {
 				List ls = (List)list;
 				if(notEmpty(ls)){
 					for(int i=0;i<ls.size();i++){
-						resutl +=(ls.get(i).toString() +",");
+						resutl +=(ls.get(i).toString() +split);
 					}
 				}
 				if(!resutl.equals("")){
 					resutl = resutl.substring(0,resutl.length()-1);
 				}
 			} catch (Exception e) {
-				System.out.println("utils.CollectionUtils：数据类型不一致");
+				///System.out.println("utils.CollectionUtils：数据类型不一致");
 			}
 		}else{
 			return resutl;

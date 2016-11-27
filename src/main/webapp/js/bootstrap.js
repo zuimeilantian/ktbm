@@ -1,6 +1,6 @@
 /*global define, require, console, cordova, navigator */
 
-define(['ionic', 'angular', 'routes', 'app'], function (ionic, angular,routes, app) {
+define(['ionic', 'angular', 'routes', 'app','ionicCitypicker'], function (ionic, angular,routes, app) {
     'use strict';
     var $html;
         /*onDeviceReady = function () {

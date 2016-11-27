@@ -1,0 +1,19 @@
+<ion-modal-view>
+    <ion-header-bar align-title="center" class="bar-positive">
+        <h1 class="title">兑换记录</h1>
+        <button class="button button-icon icon ion-ios-close-empty" ng-click="close()"></button>
+    </ion-header-bar>
+    <ion-content>
+        <div class="list">
+            <a class="item item-thumbnail-left" href="javascript:;" ng-repeat="item in exchanegs">
+                <img src="{{item.url}}" onerror="this.src = 'images/default-ware.png'">
+                <h2>商品名称: {{item.name}}</h2>
+                <p>兑换时间: {{item.exchangeTime}}</p>
+                <p>手机号: {{item.phone}}</p>
+                <p>收货地址: {{item.address}}</p>
+                <p>兑换数量: {{item.amount}}</p>
+                <p>兑换积分: {{item.point}}</p>
+            </a>
+        </div>
+    </ion-content>
+</ion-modal-view>

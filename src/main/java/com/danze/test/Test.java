@@ -11,6 +11,6 @@ public class Test {
 	@RequestMapping("/test")
 	@ResponseBody
 	public String test(){
-		return "1234";
+		return  "test123";
 	}
 }

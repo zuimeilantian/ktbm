@@ -110,7 +110,6 @@ public class MapUtils {
 				}
 			}
 		}
-		System.out.println(key + ":" + time);
 		return time;
 	}
 	

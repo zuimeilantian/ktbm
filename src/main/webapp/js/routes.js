@@ -4,106 +4,41 @@ define(['app'], function(app) {
         function($stateProvider, $urlRouterProvider) {
             $stateProvider
                 .state('register', {
-                    url: '/register',
-                    templateUrl: 'templates/register/register.tpl.html',
+                    url: '/register/:from',
+                    templateUrl: 'templates/register.html',
                     controller: 'registerCtrl'
                 })
-                .state('order-form', {
-                    url: '/order-form',
+                .state('orderForm', {
+                    url: '/orderForm',
                     templateUrl: 'templates/order/order-form.tpl.html',
                     controller: 'orderCtrl'
                 })
-                .state('bonus', {
-                    url: '/bonus',
+                .state('myBonus', {
+                    url: '/myBonus',
                     templateUrl: 'templates/bonus/bonus.tpl.html',
-                    data:{pageTitle:'bonus'},
-                    controller: 'indexCtrl'
+                    controller: 'bonusCtrl'
                 })
-            .state('record', {
-                url: '/record',
-                templateUrl: 'templates/bonus/bonus-record.tpl.html',
-                 controller: 'indexCtrl'
-            })
-            .state('exchange', {
-                url: '/exchange',
-                templateUrl: 'templates/bonus/bonus-exchange.tpl.html',
-                 controller: 'indexCtrl'
-            })
-
-                .state('presonal', { //个人中心
-                    url: '/presonal',
-                    templateUrl: 'templates/order/presonal.tpl.html',
-                    controller: 'indexCtrl'
+                .state('exchange', {
+                    url: '/exchange',
+                    templateUrl: 'templates/bonus/bonus-exchange.tpl.html',
+                    controller: 'wareCtrl'
                 })
-                .state('qr-code', { //二维码
-                    url: '/qr-code',
-                    templateUrl: 'templates/order/qr-code.tpl.html',
-                    controller: 'indexCtrl'
+                .state('myOrder', {
+                    url: '/myOrder',
+                    templateUrl: 'templates/order/my-order.tpl.html',
+                    controller: 'myOrderCtrl'
                 })
-                .state('detail', { //订单详情
-                    url: '/detail',
-                    templateUrl: 'templates/order/order-detail.tpl.html',
-                    controller: 'indexCtrl'
+                .state('personal', {
+                    url: '/personal',
+                    templateUrl: 'templates/personal/personal.tpl.html',
+                    controller: 'personalCtrl'
                 })
-                .state('detail_', { //详细
-                    url: '/detail_',
-                    templateUrl: 'templates/order/detail.tpl.html',
-                    controller: 'indexCtrl'
+                .state('record', {
+                    url: '/record',
+                    templateUrl: 'templates/bonus/bonus-record.tpl.html',
+                    controller: 'bonusCtrl'
                 })
-
-                .state('rated', { //评价
-                    url: '/rated',
-                    templateUrl: 'templates/order/rated.tpl.html',
-                    controller: 'indexCtrl'
-                })
-                .state('address', { //我的地址
-                    url: '/address',
-                    templateUrl: 'templates/order/my-address.tpl.html',
-                    controller: 'indexCtrl'
-                })
-            /*.state('tab.sort', {
-                url: '/sort',
-                views: {
-                    'tab-sort': {
-                        templateUrl: 'templates/sort/index.html',
-                        controller: 'sortCtrl'
-                    }
-                }
-            })
-            .state('tab.cart', {
-                url: '/cart',
-                views: {
-                    'tab-cart': {
-                        templateUrl: 'templates/cart/index.html',
-                        controller: 'cartCtrl'
-                    }
-                }
-            })
-            .state('tab.member', {
-                url: '/member',
-                views: {
-                    'tab-member': {
-                        templateUrl: 'templates/member/index.html',
-                        controller: 'memberCtrl'
-                    }
-                }
-            })
-            .state('tab.more', {
-                url: '/more',
-                views: {
-                    'tab-more': {
-                        templateUrl: 'templates/etc/more.html',
-                        controller: 'moreCtrl'
-                    }
-                }
-            })
-            .state('map', {
-                url: '/map',
-                templateUrl: 'templates/etc/map.html',
-                controller: 'mapCtrl'
-            });*/
-            // if none of the above states are matched, use this as the fallback
-            $urlRouterProvider.otherwise('/bonus');
+            $urlRouterProvider.otherwise('/myBonus');
 
     }]);
 });

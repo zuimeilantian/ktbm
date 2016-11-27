@@ -1,0 +1,16 @@
+<ion-modal-view>
+    <ion-header-bar align-title="center" class="bar-positive">
+        <h1 class="title">积分记录</h1>
+        <button class="button button-icon icon ion-ios-close-empty" ng-click="close()"></button>
+    </ion-header-bar>
+    <ion-content>
+        <div class="text-center" ng-show="!bonusInfo.length">暂无记录</div>
+        <div class="list">
+            <a class="item" href="javascript:;" ng-repeat="item in bonusInfo">
+                <p>积分来源: {{item.sourceName}}</p>
+                <p>积分数量: {{item.point}}</p>
+                <p>获取时间: {{item.createTime}}</p>
+            </a>
+        </div>
+    </ion-content>
+</ion-modal-view>

@@ -1,49 +1,61 @@
-/*global define */
-
-define(['app','services'/*,'mainDirective'*/], function(app){
+define(['app','services'], function(app){
     'use strict';
-
     var directives = angular.module('app.directives', ['app.services']);
-
     directives.directive('cMark',[function(){
         return {
             restrict: 'E',
             replace: true,
             scope:{
-                mark: "="
+                mark: "=",
+                preset: '='
             },
             template:'<span><i class="ion-ios-star mark" style="color: #d1d1d1;font-size: 18px;margin-left: 4px;" ng-click="doMark(1)"></i>' +
             '<i class="ion-ios-star mark" style="color: #d1d1d1;font-size: 18px;margin-left: 4px;" ng-click="doMark(2)"></i>' +
             '<i class="ion-ios-star mark" style="color: #d1d1d1;font-size: 18px;margin-left: 4px;" ng-click="doMark(3)"></i>' +
             '<i class="ion-ios-star mark" style="color: #d1d1d1;font-size: 18px;margin-left: 4px;" ng-click="doMark(4)"></i>' +
             '<i class="ion-ios-star mark" style="color: #d1d1d1;font-size: 18px;margin-left: 4px;" ng-click="doMark(5)"></i></span>',
-            link:function(scope){
+            link:function(scope, element){
                 scope.doMark = function(num){
-                    var mark = document.getElementsByClassName("mark");
+                    var mark = $(element).find(".mark");
                     for(var i = 0;i < 5; i++){
                         mark[i].style.color = '#d1d1d1';
                     }
                     for(var i = 0;i < num; i++){
-                        mark[i].style.color = '#E6D932';
+                        mark[i].style.color = 'red';
                     }
                     scope.mark = num;
+                }
+                if(scope.preset){
+                    scope.doMark(parseInt(scope.preset));
                 }
             }
         }
     }])
-    .directive('cPhoto', function($ionicBackdrop, $ionicPopup){
+    .directive('cPhoto', function($ionicBackdrop, $ionicPopup, $ionicScrollDelegate, $mainServices){
         return{
             restrict: 'E',
-            scope:{},
-            templateUrl: './templates/directive/photo.tpl.html',
+            scope:{
+                output: '='
+            },
+            templateUrl: 'templates/directive/photo.tpl.html',
             link: function(scope){
                 scope.cameraClick = function(){
-                    angular.element("input[type='file']").click();
+                    $("input[type='file']").click();
                 };
-                var $uploaderInput = angular.element("#uploaderInput"),
-                    uploadImgs = [];
+                var $uploaderInput = $("#uploaderInput"),
+                    popupImgs = [],
+                    imgIds = [];
+                    scope.urlMap = {};
                 $uploaderInput.on("change", function(e){
-                    var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files, timestamp = +new Date();
+                    var src,
+                        url = window.URL || window.webkitURL || window.mozURL,
+                        files = e.target.files,
+                        timestamp = +new Date();
+                    console.log(files, files.length)
+                    if(files && files.length > 8){
+                        $mainServices.alertTip('warning', '最多上传八张');
+                        files = files.splice(0, 7);
+                    }
                     for (var i = 0, len = files.length; i < len; ++i) {
                         var file = files[i];
                         if (url) {
@@ -51,21 +63,22 @@ define(['app','services'/*,'mainDirective'*/], function(app){
                         } else {
                             src = e.target.result;
                         }
-                        uploadImgs.push({
+                        popupImgs.push({
                             src: src,
                             name: file.name,
-                            timestamp: timestamp,
-                            readableSize: bytesToSize(file.size)
+                            timestamp: timestamp += 1
                         });
+                        file.timestamp = popupImgs[i].timestamp;
                     };
-                    scope.$apply(function(){
-                        scope.uploadImgs = uploadImgs;
-                    })
-                   /* setTimeout(function () {
-                        angular.forEach(uploadImgs, function (file) {
+                    scope.$apply(function () {
+                        scope.display = popupImgs;
+                    });
+                    setTimeout(function () {
+                        angular.forEach(files, function (file) {
                             uploadFile(file)
                         })
-                    })*/
+                    });
+                    $ionicScrollDelegate.scrollBottom(true);
                 });
                 var popup;
                 scope.checkImg = function(imgObj){
@@ -82,16 +95,12 @@ define(['app','services'/*,'mainDirective'*/], function(app){
                     popup.close();
                 };
 
-                scope.removeImg = function(index){
-                    uploadImgs.splice(index, 1);
-                    scope.uploadImgs = uploadImgs;
+                scope.removeImg = function(file, index){
+                    scope.display.splice(index, 1);
+                    imgIds.splice(imgIds.indexOf(file.id), 1);
+                    scope.output = imgIds + '';
                 };
-                function bytesToSize(bytes) {
-                    var sizes = ['Bytes', 'KB', 'MB'];
-                    if (bytes == 0) return 'n/a';
-                    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-                    return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
-                };
+
                 function createImg(imgObj){
                     var imgHTML,
                         img = new Image();
@@ -99,35 +108,39 @@ define(['app','services'/*,'mainDirective'*/], function(app){
                     imgHTML = '<img ng-click="checkOver()" width="100%" alt="" src="'+ img.src +'">';
                     return imgHTML;
                 };
+                function _setProgress(timestamp, percent) {
+                    var fileProgress = document.getElementById('file-progress-' + timestamp);
+                    fileProgress.style.width = percent + '%';
+                };
+                function bytesToSize(bytes) {
+                    var sizes = ['Bytes', 'KB', 'MB'];
+                    if (bytes == 0) return 'n/a';
+                    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+                    return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
+                }
                 function uploadFile(file) {
-                    var url = 'http://192.168.1.41:8080/oa/file/upload';
+                    var url = '/ktbm/filesController/upload';
                     var xhr = new XMLHttpRequest();
                     var fd = new FormData();
                     xhr.open("POST", url, true);
-                    xhr.setRequestHeader("POWERED-BY-MENGXIANHUI", "Approve");
-                    xhr.setRequestHeader("Content-Type", "application/xml");
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState == 4 && xhr.status == 200) {
                             var data = JSON.parse(xhr.responseText)
-                                , url = 'http://192.168.1.41:8080/upload/files/' + data.name
+                                , url = 'upload/files/' + data.name
                                 , curTimestamp = file.timestamp;
                             file.id = data.id;
-                            console.log(data, url)
-                            //fileIds.push(data.id);
-                            //scope.output = scope.outputType=='arr'?fileIds:fileIds + '';
-                            //_setIcon(curTimestamp, url, data.type);
-                            /*scope.$apply(function () {
-                                scope.urlMap[curTimestamp] = url;
-                            })*/
-                        }else{
-                            console.log('不允许跨域')
+                            imgIds.push(file.id);
+                            scope.output = imgIds + '';
+                            console.log(scope.output)
+                            scope.$apply(function () {
+                                scope.output = imgIds + '';
+                            })
                         }
                     };
                     xhr.upload.onprogress = function (e) {
                         if (e.lengthComputable) {
                             var percent = Math.round(e.loaded / e.total);
-                            console.log(percent);
-                            //_setProgress(file.timestamp, percent * 100);
+                            _setProgress(file.timestamp, percent * 100);
                         }
                     };
                     fd.append("file", file);
@@ -135,8 +148,18 @@ define(['app','services'/*,'mainDirective'*/], function(app){
                 }
             }
         }
-    });
-    
+    }).directive('errSrc', function() {
+        return {
+            link: function(scope, element, attrs) {
+                element.bind('error', function() {
+                    if (attrs.src != attrs.errSrc) {
+                        attrs.$set('src', attrs.errSrc);
+                    }
+                });
+            }
+        }
+    })
+   
     return directives;
 
 });

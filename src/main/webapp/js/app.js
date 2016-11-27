@@ -6,7 +6,8 @@ define(['angular',
         'ionicAngular',
         'services',
         'controllers',
-        'directives'
+        'directives',
+        'ionicCitypicker'
         ],
 
     function (angular,ionic ,uiRouter) {
@@ -17,7 +18,8 @@ define(['angular',
             'app.controllers',
             'app.directives',
             'app.services',
-            'ui.router'
+            'ui.router',
+            'ionic-citypicker'
         ]);
     return app;
 });

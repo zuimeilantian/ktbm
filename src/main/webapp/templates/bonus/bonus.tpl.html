@@ -1,41 +1,32 @@
 <ion-view view-title="我的积分">
     <ion-content overflow-scroll='false'>
-        <div class="weui-cells">
-           <!-- <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <span>我的积分</span>
-                </div>
-                <div class="weui-cell__ft">1318积分</div>
-            </div>-->
+        <div class="weui-cells wechat-top">
             <div class="weui-cell">
                 <div class="weui-cell__hd">
-                    <i class="icon ion-social-skype" style="width:20px;margin-right:5px;display:block;color: #999999;"></i>
-                    <!--<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width:20px;margin-right:5px;display:block">-->
+                    <i class="icon ion-social-skype wechat-bonus-left"></i>
                 </div>
                 <div class="weui-cell__bd">
                     <span>我的积分</span>
                 </div>
-                <div class="weui-cell__ft">1318积分</div>
+                <div class="weui-cell__ft" style="font-size: 14px;"><strong>{{point}}</strong> <small>积分</small></div>
             </div>
-            <a class="weui-cell" href="#/record">
+            <a class="weui-cell" href="javascript:;" ng-click="showRecord()">
                 <div class="weui-cell__hd">
-                    <i class="icon ion-android-list" style="width:20px;margin-right:5px;display:block;color: #999999;"></i>
-                    <!--<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width:20px;margin-right:5px;display:block">-->
+                    <i class="icon ion-android-list wechat-bonus-left"></i>
                 </div>
                 <div class="weui-cell__bd">
-                    <span style="color: #333;">积分兑换记录</span>
+                    <span>积分记录</span>
                 </div>
-                <i class="icon ion-ios-arrow-forward" style="color: #999999;"></i>
+                <i class="icon ion-ios-arrow-forward"></i>
             </a>
             <a class="weui-cell" href="#/exchange">
                 <div class="weui-cell__hd">
-                    <i class="icon ion-social-usd" style="width:20px;margin-right:5px;display:block;color: #999999;"></i>
-                    <!--<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width:20px;margin-right:5px;display:block">-->
+                    <i class="icon ion-social-usd wechat-bonus-left"></i>
                 </div>
                 <div class="weui-cell__bd">
-                    <span style="color: #333;">积分兑换</span>
+                    <span>积分兑换</span>
                 </div>
-                <i class="icon ion-ios-arrow-forward" style="color: #999999;"></i>
+                <i class="icon ion-ios-arrow-forward"></i>
             </a>
         </div>
     </ion-content>

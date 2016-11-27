@@ -1,0 +1,92 @@
+<style>
+    .item{
+        border-width: 0;
+    }
+    .chat-box{
+        -webkit-transition:1s ease;
+        -moz-transition:1s ease;
+        -webkit-transition-property:all;
+        -moz-transition-property:all;
+        background: #EBEBEB;
+    }
+    .chat-box.ng-enter .message-box{
+        /*transform: scale(0);
+        -webkit-transform: scale(0);*/
+        opacity: 0;
+    }
+    .chat-box.ng-enter-active .message-box{
+        opacity: 1;
+    }
+    .message-box.left{
+        float: left;
+        text-align: left;
+    }
+    .message-box.right{
+        float: right;
+        text-align: right;
+    }
+    .chat{
+        padding: 3px 7px;
+        position: relative;
+        border-radius: 5px;
+        display: inline-block;
+        box-shadow: 1px 1px 1px #a1a1a1;
+        font-size: 13px;;
+    }
+    .chat.left{
+        background: #FFFFFF;
+        color: #051F01;
+
+    }
+    .chat.right{
+        background: #02cb78;
+        color: #ffffff;
+    }
+    .chat.right:after{
+        content: '';
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: 5px;
+        right: -16px;
+        border: solid 8px;
+        border-color: transparent transparent transparent #02cb78;
+        font-size: 0;
+    }
+    .chat.left:before{
+        content: '';
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: 5px;
+        left: -16px;
+        border: solid 8px;
+        border-color: transparent #FFFFFF transparent transparent ;
+        font-size: 0;
+    }
+</style>
+<ion-modal-view>
+    <ion-pane  class="messaging-view">
+        <ion-header-bar class="bar-positive">
+            <h1 class="title">聊天</h1>
+            <button class="button button-icon icon ion-ios-close-empty" ng-click="closeIM()"></button>
+        </ion-header-bar>
+        <ion-content overflow-scroll="false" style="background: #EBEBEB;">
+            <div class="list" >
+                <a class="item chat-box item-avatar-{{item.position}}" href="javascript:;" ng-repeat="item in messages track by $index">
+                    <img src="{{item.image}}">
+                    <div class="message-box {{item.position}}">
+                        <h5 style="font-size: 8px;">{{item.time|date:'MM-dd HH:ss'}}</h5>
+                        <div class="chat {{item.position}}">{{item.text}}</div>
+                    </div>
+                </a>
+            </div>
+        </ion-content>
+        <ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
+            <label class="item-input-wrapper">
+                <input type="text" ng-model="data.message" >
+            </label>
+            <button class="button button-clear" ng-click="sendMessage(data.message)">发送</button>
+        </ion-footer-bar>
+    </ion-pane>
+</ion-modal-view>

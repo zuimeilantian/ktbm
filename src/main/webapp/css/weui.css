@@ -457,7 +457,7 @@ input.weui-btn_plain-default {
 }
 .weui-cell__ft {
   text-align: right;
-  color: #999999;
+  color: rgb(161, 161, 161);
 }
 .weui-cell_access {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);

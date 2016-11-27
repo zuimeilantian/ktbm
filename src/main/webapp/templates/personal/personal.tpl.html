@@ -1,0 +1,122 @@
+<ion-view view-title="个人中心">
+    <ion-header-bar></ion-header-bar>
+    <ion-content overflow-scroll='false'>
+        <div class="weui-cells wechat-top">
+            <a class="weui-cell weui-cell_access item item-avatar" href="javascript:;" ng-click="showqrCode(person)">
+                <!--<img src="images/qrcode.png" alt="">-->
+                <img src="{{person.iconUrl}}">
+                <div class="weui-cell__bd weui-cell_primary">
+                   <!-- <span>{{person.name}}</span>-->
+                </div>
+                <span class="weui-cell__ft">二维码</span>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:;" ng-click="updateField('姓名', 'name')">
+                <div class="weui-cell__bd">
+                    <span>姓名</span>
+                </div>
+                <div class="weui-cell__ft">{{person.name}}</div>
+            </a>
+            <a class="weui-cell weui-cell_access" ui-sref="register({from: 'personal'})">
+                <div class="weui-cell__bd">
+                    <span>电话</span>
+                </div>
+                <div class="weui-cell__ft">{{person.phone}}</div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:;" ng-click="updateField('所属单位', 'company')">
+                <div class="weui-cell__bd">
+                    <span>所属公司</span>
+                </div>
+                <div class="weui-cell__ft">{{person.company}}</div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:;" ng-click="openBranch($event)">
+                <div class="weui-cell__bd">
+                    <span>默认维修公司</span>
+                </div>
+                <div class="weui-cell__ft">{{person.defaultGroupName}}</div>
+            </a>
+           <!-- <a class="weui-cell weui-cell_access" href="javascript:;" ng-click="editLocalCity()">
+                <div class="weui-cell__bd">
+                    <span>所在城市</span>
+                </div>
+                <div class="weui-cell__ft">{{localCityInfo}}</div>
+            </a>-->
+            <a class="weui-cell weui-cell_access" href="#/myBonus">
+                <div class="weui-cell__bd">
+                    <span>我的积分</span>
+                </div>
+                <div class="weui-cell__ft">{{person.points}} 积分</div>
+            </a>
+            <a class="weui-cell weui-cell_access" href="javascript:;" ng-click="addressManage()">
+                <div class="weui-cell__bd">
+                    <span>我的地址</span>
+                </div>
+                <div class="weui-cell__ft"></div>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>
+<script id="qrcode.tpl.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar align-title="center" class="bar-positive">
+            <button class="button button-icon icon ion-ios-arrow-back" ng-click="closeQRCode()"></button>
+            <h1 class="title">个人信息</h1>
+        </ion-header-bar>
+        <ion-content overflow-scroll="false">
+            <div class="list">
+                <div class="item text-center">
+                    <img ng-click="changeHead()" src="{{displayPerson.iconUrl}}"  style="border-radius: 50%;height: 80px;display: block;margin: 0 auto;">
+                    <small style="margin-top: 5px;">更改头像</small>
+                    <input type="file" id="uploadHead" style="display: none"/>
+                </div>
+                <div class="item">
+                    <img src="{{displayPerson.url}}" style="width: 90%;display: block;margin: 0 auto;">
+                </div>
+            </div>
+        </ion-content>
+    </ion-modal-view>
+</script>
+<script id="address.tpl.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar align-title="center" class="bar-positive">
+            <button class="button button-icon icon ion-ios-arrow-back" ng-click="goBack()"></button>
+            <h1 class="title">地址管理</h1>
+            <button class="button button-clear" on-tap="hideDelete()" ng-show="showDelete && addrList.length">隐藏</button>
+        </ion-header-bar>
+        <ion-content overflow-scroll="false">
+            <ion-list show-delete="showDelete" id="test">
+                <ion-item ng-repeat="item in addrList" href="javascript:;" >
+                    <span on-tap="editAddr(item)">{{item.province + item.city + item.district  + item.detail}}</span>
+                    <ion-option-button class="icon ion-minus-circled assertive" ng-click="$event.stopPropagation();doDelete(item)"></ion-option-button>
+                    <ion-option-button ng-hide="optionFlag" class="button-calm" ng-click="$event.stopPropagation();setDefault(item)">设为默认</ion-option-button>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+        <ion-footer-bar class="bar bar-footer button-bar" style="height: 50px;background: #f5f5f5;">
+            <button class="button button-positive" ng-click="addressAdd()">添加新地址</button>
+        </ion-footer-bar>
+    </ion-modal-view>
+</script>
+<script id="edit_localcity.tpl.html" type="text/ng-template">
+    <div class="weui-cells" id="localcity">
+        <div class="weui-cell weui-cell_select">
+            <div class="weui-cell__bd"><select class="weui-select prov"></select> </div>
+        </div>
+        <div class="weui-cell weui-cell_select">
+            <div class="weui-cell__bd"><select class="weui-select city"></select> </div>
+        </div>
+        <div class="weui-cell weui-cell_select">
+            <div class="weui-cell__bd"><select class="weui-select dist"></select> </div>
+        </div>
+    </div>
+</script>
+<script id="branchs.popover.html" type="text/ng-template">
+    <ion-popover-view>
+        <ion-content>
+            <div class="list">
+                <a href="javascript:;" class="item" ng-repeat="item in branches track by $index" ng-click="setBranch(item, 'defaultGroup')">
+                    {{item.name}}
+                </a>
+            </div>
+        </ion-content>
+    </ion-popover-view>
+</script>

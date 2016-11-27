@@ -2,6 +2,7 @@ package com.danze.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -9,6 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.danze.dao.CircleDAO;
@@ -19,6 +21,8 @@ import com.danze.dao.CircleDAO;
  */
 @Service(value="baseService")
 public class BaseService {
+	@Value("#{configProperties['fileurl']}")
+	public String fileurl;
 	
 	@Resource
 	CircleDAO dao;
@@ -35,6 +39,14 @@ public class BaseService {
 			return 0;
 		}else{
 			return Integer.valueOf(""+map.get(param));
+		}
+	}
+	
+	public Double getDoubleParam(Map<String,Object> map,String param){
+		if(map.get(param)==null){
+			return 0.0;
+		}else{
+			return Double.valueOf(""+map.get(param));
 		}
 	}
 	
@@ -124,6 +136,26 @@ public class BaseService {
 				   + "select fn_getsequence('t_log_record'),t.id,replace(replace(t.log_content, '#操作人#', '"+oper_name+"'), '#操作对象#', '"+obName+"'),"
 				   + "'"+ip+"','"+com_id+"','"+ids+"',1,'"+oper_id+"','"+oper_time+"' from t_log_template t where t.id = '"+template_id+"'";
 		return sql;
+	}
+	
+	/*
+	 * 获取随机数
+	 */
+	public String getRandoms(int count){
+		String randoms = "";
+		for(int i=0;i<count;i++){
+			randoms += String.valueOf((int)(Math.random()*10));
+		}
+		return randoms;
+	}
+	
+	public String[] ListZhArray(List<String> list){
+		int cnt = list.size();
+		String[] sqls = new String[cnt];
+		for(int i=0;i<cnt;i++){
+			sqls[i]=list.get(i);
+		}
+		return sqls;
 	}
 	
 }
